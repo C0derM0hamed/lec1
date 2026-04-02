@@ -1,19 +1,19 @@
 <script src="https://cdn.tailwindcss.com"></script>
-<form   action="/store" class="mx-auto max-w-md space-y-4 rounded-lg border border-gray-300 bg-gray-100 p-6 m-20" method="POST">
-  
 
-<div>
-    <label class="block text-sm font-medium text-gray-900" for="title">Title</label>
-    <input class="mt-1 w-full rounded-lg border-gray-300 focus:border-indigo-500 focus:outline-none" id="title" name="title" type="text" placeholder="title of the post">
+<form action="/posts" class="mx-auto max-w-lg space-y-6 rounded-2xl border border-gray-100 bg-white p-8 shadow-lg shadow-gray-100 mt-16 sm:mt-24" method="POST">
+  @csrf
+  <div>
+    <label class="mb-1.5 block text-sm font-semibold text-gray-800" for="title">Title</label>
+    <input class="mt-1 block w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 placeholder-gray-400 transition-all duration-200 focus:border-indigo-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-100" id="title" name="title" type="text" placeholder="Title of the post">
   </div>
 
   <div>
-    <label class="block text-sm font-medium text-gray-900"  for="body">Body</label>
-    <input class="mt-1 w-full rounded-lg border-gray-300 focus:border-indigo-500 focus:outline-none" id="body" name="body" type="text" placeholder="body of the post">
+    <label class="mb-1.5 block text-sm font-semibold text-gray-800"  for="content">Body</label>
+    <textarea class="mt-1 block w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 placeholder-gray-400 transition-all duration-200 focus:border-indigo-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-100" id="content" name="content" rows="5" placeholder="Body of the post"></textarea>
   </div>
 
 
-  <button class="block w-full rounded-lg border border-indigo-600 bg-indigo-600 px-12 py-3 text-sm font-medium text-white transition-colors hover:bg-transparent hover:text-indigo-600" type="submit">
+  <button type="submit" class="block w-full rounded-xl bg-indigo-600 px-6 py-3.5 text-sm font-semibold text-white shadow-md shadow-indigo-200 transition-all duration-200 hover:bg-indigo-700 hover:shadow-lg hover:shadow-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
     Create Post
   </button>
 </form>

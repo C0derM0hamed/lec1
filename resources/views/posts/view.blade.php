@@ -1,53 +1,28 @@
 <script src="https://cdn.tailwindcss.com"></script>
 
-<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  function deletePost(postId) {
+    return confirm('Are you sure you want to delete this post?');
+  }
+</script>
 
-<article class="rounded-xl bg-white p-4 ring-3 ring-indigo-50 sm:p-6 lg:p-8">
-  <div class="flex items-start sm:gap-8">
-    <div class="hidden sm:grid sm:size-20 sm:shrink-0 sm:place-content-center sm:rounded-full sm:border-2 sm:border-indigo-500" aria-hidden="true">
-      <div class="flex items-center gap-1">
-        <span class="h-8 w-0.5 rounded-full bg-indigo-500"></span>
-        <span class="h-6 w-0.5 rounded-full bg-indigo-500"></span>
-        <span class="h-4 w-0.5 rounded-full bg-indigo-500"></span>
-        <span class="h-6 w-0.5 rounded-full bg-indigo-500"></span>
-        <span class="h-8 w-0.5 rounded-full bg-indigo-500"></span>
-      </div>
+<div class="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8">
+  <article class="rounded-2xl border border-gray-100 bg-white p-8 shadow-lg shadow-gray-100">
+    <div class="mb-4 inline-block rounded-full bg-indigo-50 px-3 py-1 text-xs font-bold text-indigo-600">
+      #{{ $post->id }}
     </div>
 
-    <div>
-      <strong class="rounded-sm border border-indigo-500 bg-indigo-500 px-3 py-1.5 text-[10px] font-medium text-white">
-       @if(isset($post['id']))
-         {{$post['id']}}
-       @endif
-      </strong>
+    <h1 class="text-3xl font-extrabold tracking-tight text-gray-900">{{ $post->title }}</h1>
 
-      <h3 class="mt-4 text-lg font-medium sm:text-xl">
+    <p class="mt-5 whitespace-pre-line text-base leading-relaxed text-gray-600">{{ $post->content }}</p>
 
-            <h3>{{ $post['title'] }}</h3>
-      </h3>
-
-      <p class="mt-1 text-sm text-gray-700">
-        {{ $post['body'] }}
-      </p>
-
-      <div class="mt-4 sm:flex sm:items-center sm:gap-2">
-        <div class="flex items-center gap-1 text-gray-500">
-          <svg class="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-          </svg>
-
-          <p class="text-xs font-medium">48:32 minutes</p>
-        </div>
-
-        <span class="hidden sm:block" aria-hidden="true">·</span>
-
-        <p class="mt-2 text-xs font-medium text-gray-500 sm:mt-0">
-          Featuring-3
-          <a href="#" class="underline hover:text-gray-700">Barry</a>,
-          <a href="#" class="underline hover:text-gray-700">Sandra</a> and
-          <a href="#" class="underline hover:text-gray-700">August</a>
-        </p>
-      </div>
+    <div class="mt-8 flex items-center gap-3 border-t border-gray-100 pt-6 text-sm">
+      <a href="/posts/{{ $post->id }}/edit" class="rounded-lg bg-amber-50 px-4 py-2 font-medium text-amber-600 transition-colors duration-150 hover:bg-amber-100">Edit</a>
+      <form action="/posts/{{ $post->id }}" method="POST" onsubmit="return deletePost();">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="rounded-lg bg-red-50 px-4 py-2 font-medium text-red-600 transition-colors duration-150 hover:bg-red-100">Delete</button>
+      </form>
     </div>
-  </div>
-</article>
+  </article>
+</div>
