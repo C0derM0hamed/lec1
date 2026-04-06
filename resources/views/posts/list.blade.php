@@ -56,3 +56,8 @@
 </article>
 
 @endforeach
+
+
+  @foreach($error as $err)
+    <p class="text-sm text-red-500">{{ $err }}</p>
+  @endforeach

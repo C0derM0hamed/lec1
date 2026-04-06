@@ -12,8 +12,24 @@
     <textarea class="mt-1 block w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-900 placeholder-gray-400 transition-all duration-200 focus:border-indigo-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-100" id="content" name="content" rows="5" placeholder="Body of the post"></textarea>
   </div>
 
+  <select class="form-controll" name="user_id" id="user_id">
+    @foreach($users as $user)
+      <option  value="{{ $user->id }}">{{ $user->name }}</option>
+    @endforeach
+  </select>
 
   <button type="submit" class="block w-full rounded-xl bg-indigo-600 px-6 py-3.5 text-sm font-semibold text-white shadow-md shadow-indigo-200 transition-all duration-200 hover:bg-indigo-700 hover:shadow-lg hover:shadow-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
     Create Post
   </button>
+
+  <ul>
+    @foreach ($errors->all() as $error)
+      <li class="text-sm text-red-500">{{ $error }}</li>
+    @endforeach
+  </ul>
 </form>
+
+
+  @foreach($errors as $err)
+    <p class="text-sm text-red-500">{{ $err }}</p>
+  @endforeach

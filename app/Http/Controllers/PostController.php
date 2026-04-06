@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
-use Illuminate\Http\Request;
+use App\Models\User;
 
 class PostController extends Controller
 {
     function index(){
-        $posts = Post::all();
+        $posts = Post::withTrashed()->paginate(10);
         return view('posts.index', compact('posts'));
     }
 
@@ -20,37 +21,66 @@ class PostController extends Controller
 
 
     function create(){
-        return view('posts.create');
+        return view('posts.create', [
+            'users' =>User::all()
+        ]);
     }
     
     
-    function store(Request $request){
-  
+    function store(StorePostRequest $request){
+/*
         $validated = $request->validate([
             'title' => 'required',
             'content' => 'required',
         ]);
 
-        Post::create($validated);
+ $request->validate([
+            'title' => 'required|unique:posts|max:255',
+            'content' => 'required',
+        ]);
+
+$request->validate([
+            'title' => ['required', 'unique:posts', 'max:255'],
+            'content' => 'required',
+        ],[
+            'title.required' => 'The title field is required.',
+            'title.unique' => 'The title must be unique.',
+            'title.max' => 'The title may not be greater than 255 characters.',
+            'content.required' => 'The content field is required.',
+        ]);
+*/
+
+        Post::create([
+            'title' => $request->title,
+            'content' => $request->content,
+            'user_id' => 1
+        ]);
 
         return redirect('/posts')->with('success','Post created successfully');
     }
 
     function edit($id){
          $post=Post::findOrFail($id);
-         return view('posts.edit', compact('post'));
+
+            return view('posts.edit', [
+            'users' =>User::all(),
+                 'post' => $post
+         ]);
     }
 
-    function update($id,Request $request){
+    function update($id,StorePostRequest $request){
 
-            $validated = $request->validate([
-            'title'=>'required|string',
-            'content'=>'required|string'
-         ]);
+        //$post = Post::find($id);
+         //$post->title = $request->title
+         // $post->content = $request->content
+         // $post->save()
 
-         $post = Post::findOrFail($id);
-
-            $post->update($validated);
+        $post = Post::findOrFail($id);
+   
+        $post->update([
+            'title' => $request->title,
+            'content' => $request->content,
+        ]);
 
             return redirect('/posts')->with('success', 'Post updated successfully');
     }
@@ -60,7 +90,25 @@ class PostController extends Controller
 
         $post->delete();
 
+        // Post::destroy($id)
+
         return redirect('/posts')->with('success', "Post deleted successfully");
+    }
+
+    function forceDelete($id){
+        $post = Post::onlyTrashed()->findOrFail($id);
+
+        $post->forceDelete();
+
+        return redirect('/posts')->with('success', "Post permanently deleted successfully");
+    }
+
+    function restore($id){
+        $post = Post::onlyTrashed()->findOrFail($id);
+
+        $post->restore();
+
+        return redirect('/posts')->with('success', "Post restored successfully");
     }
 
 }
