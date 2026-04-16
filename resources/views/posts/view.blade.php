@@ -1,4 +1,4 @@
-<script src="https://cdn.tailwindcss.com"></script>
+<x-layout>
 
 <script>
   function deletePost(postId) {
@@ -6,23 +6,40 @@
   }
 </script>
 
-<div class="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8">
-  <article class="rounded-2xl border border-gray-100 bg-white p-8 shadow-lg shadow-gray-100">
+<div class="mx-auto max-w-3xl px-4 py-6 sm:px-6 lg:px-8">
+<article class="rounded-2xl border border-gray-100 bg-white p-8 shadow-lg shadow-gray-100">
     <div class="mb-4 inline-block rounded-full bg-indigo-50 px-3 py-1 text-xs font-bold text-indigo-600">
-      #{{ $post->id }}
+      Post Info
     </div>
 
-    <h1 class="text-3xl font-extrabold tracking-tight text-gray-900">{{ $post->title }}</h1>
+    <h3 class="text-1xl font-extrabold tracking-tight text-gray-900">Title : </h3>
+    <p class="mt-5 whitespace-pre-line text-base leading-relaxed text-gray-600">{{ $post->title }}</p>
+    <h3 class="text-1xl font-extrabold tracking-tight text-gray-900">Description : </h3>
+    <p class="mt-5 whitespace-pre-line text-base leading-relaxed text-gray-600"> {{ $post->content }}</p>
 
-    <p class="mt-5 whitespace-pre-line text-base leading-relaxed text-gray-600">{{ $post->content }}</p>
 
-    <div class="mt-8 flex items-center gap-3 border-t border-gray-100 pt-6 text-sm">
-      <a href="/posts/{{ $post->id }}/edit" class="rounded-lg bg-amber-50 px-4 py-2 font-medium text-amber-600 transition-colors duration-150 hover:bg-amber-100">Edit</a>
-      <form action="/posts/{{ $post->id }}" method="POST" onsubmit="return deletePost();">
-        @csrf
-        @method('DELETE')
-        <button type="submit" class="rounded-lg bg-red-50 px-4 py-2 font-medium text-red-600 transition-colors duration-150 hover:bg-red-100">Delete</button>
-      </form>
-    </div>
   </article>
 </div>
+
+<div class="mx-auto max-w-3xl px-4 py-6 sm:px-6 lg:px-8">
+<article class="rounded-2xl border border-gray-100 bg-white p-8 shadow-lg shadow-gray-100">
+    <div class="mb-4 inline-block rounded-full bg-indigo-50 px-3 py-1 text-xs font-bold text-indigo-600">
+      User Info
+    </div>
+
+    <h3 class="text-2xl font-extrabold tracking-tight text-gray-900"> Name : {{ $post->user->name }}</h3>
+
+    <p class="mt-5 whitespace-pre-line text-base leading-relaxed text-gray-600">Email : {{ $post->user->email }}</p>
+
+    <p class="mt-5 whitespace-pre-line text-base leading-relaxed text-gray-600">Created At : {{ $post->user->created_at->format('l jS \of F Y h:i:s A') }}</p>
+
+
+  </article>
+</div>
+
+
+  @foreach($errors as $err)
+    <p class="text-sm text-red-500">{{ $err }}</p>
+  @endforeach
+
+</x-layout>

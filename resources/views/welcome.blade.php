@@ -1,6 +1,6 @@
 <script src="https://cdn.tailwindcss.com"></script>
 
-@foreach($posts as $post)
+@forelse(($posts ?? []) as $post)
 <article class="rounded-xl bg-white p-4 ring-3 ring-indigo-50 sm:p-6 lg:p-8 m-6">
   <div class="flex items-start sm:gap-8">
     <div class="hidden sm:grid sm:size-20 sm:shrink-0 sm:place-content-center sm:rounded-full sm:border-2 sm:border-indigo-500" aria-hidden="true">
@@ -43,4 +43,8 @@
   </div>
 </article>
 
-@endforeach
+@empty
+<div class="m-6 rounded-xl bg-white p-6 text-gray-600 ring-1 ring-gray-200">
+  No posts found.
+</div>
+@endforelse
