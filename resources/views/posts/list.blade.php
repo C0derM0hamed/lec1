@@ -1,4 +1,5 @@
-<script src="https://cdn.tailwindcss.com"></script>
+<x-app-layout>
+
 
 @foreach($posts as $index => $post)
 <article class="rounded-xl bg-white p-4 ring-3 ring-indigo-50 sm:p-6 lg:p-8">
@@ -61,3 +62,5 @@
   @foreach($error as $err)
     <p class="text-sm text-red-500">{{ $err }}</p>
   @endforeach
+
+</x-app-layout>

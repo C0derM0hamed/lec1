@@ -1,6 +1,8 @@
-<script src="https://cdn.tailwindcss.com"></script>
+<x-layout>
 
-<form action="/posts/{{ $post->id }}" class="mx-auto max-w-lg space-y-6 rounded-2xl border border-gray-100 bg-white p-8 shadow-lg shadow-gray-100 mt-16 sm:mt-24" method="POST">
+
+
+<form action="{{ route('posts.update', $post->id) }}" class="mx-auto mt-6 max-w-lg space-y-6 rounded-2xl border border-gray-100 bg-white p-8 shadow-lg shadow-gray-100 sm:mt-8" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PUT')
   <div>
@@ -29,3 +31,4 @@
     <p class="text-sm text-red-500">{{ $err }}</p>
   @endforeach
 
+</x-layout>

@@ -1,4 +1,4 @@
-<script src="https://cdn.tailwindcss.com"></script>
+<x-layout>
 
 <script>
   function deletePost(postId) {
@@ -6,7 +6,7 @@
   }
 </script>
 
-<div class="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8">
+<div class="mx-auto max-w-3xl px-4 py-6 sm:px-6 lg:px-8">
 <article class="rounded-2xl border border-gray-100 bg-white p-8 shadow-lg shadow-gray-100">
     <div class="mb-4 inline-block rounded-full bg-indigo-50 px-3 py-1 text-xs font-bold text-indigo-600">
       Post Info
@@ -21,7 +21,7 @@
   </article>
 </div>
 
-<div class="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8">
+<div class="mx-auto max-w-3xl px-4 py-6 sm:px-6 lg:px-8">
 <article class="rounded-2xl border border-gray-100 bg-white p-8 shadow-lg shadow-gray-100">
     <div class="mb-4 inline-block rounded-full bg-indigo-50 px-3 py-1 text-xs font-bold text-indigo-600">
       User Info
@@ -41,3 +41,5 @@
   @foreach($errors as $err)
     <p class="text-sm text-red-500">{{ $err }}</p>
   @endforeach
+
+</x-layout>

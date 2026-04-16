@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth ;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -53,7 +55,9 @@ $request->validate([
         Post::create([
             'title' => $request->title,
             'content' => $request->content,
-            'user_id' => 1
+            'user_id' => Auth::id(),
+             'image' => $request->file('image') ? $request->file('image')->store('images', 'public') : null,
+
         ]);
 
         return redirect('/posts')->with('success','Post created successfully');
@@ -80,6 +84,7 @@ $request->validate([
         $post->update([
             'title' => $request->title,
             'content' => $request->content,
+            'image' => $request->file('image') ? $request->file('image')->store('images', 'public') : null,
         ]);
 
             return redirect('/posts')->with('success', 'Post updated successfully');
@@ -87,6 +92,8 @@ $request->validate([
 
     function destroy($id){
         $post = Post::findOrFail($id);
+
+
 
         $post->delete();
 
@@ -98,6 +105,9 @@ $request->validate([
     function forceDelete($id){
         $post = Post::onlyTrashed()->findOrFail($id);
 
+        if($post->image){
+        Storage::disk('public')->delete($post->image);
+        }
         $post->forceDelete();
 
         return redirect('/posts')->with('success', "Post permanently deleted successfully");

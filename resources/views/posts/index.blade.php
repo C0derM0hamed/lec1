@@ -1,4 +1,4 @@
-<script src="https://cdn.tailwindcss.com"></script>
+<x-layout>
 
 <script>
   function deletePost(postId) {
@@ -6,7 +6,7 @@
   }
 </script>
 
-<div class="mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
+<div class="mx-auto max-w-5xl px-4 py-6 sm:px-6 lg:px-8">
   <div class="mb-8 flex items-center justify-between">
     <h1 class="text-3xl font-extrabold tracking-tight text-gray-900">Posts</h1>
     <a href="/posts/create"
@@ -31,6 +31,11 @@
 
           <p class="mt-2 text-sm leading-relaxed text-gray-500">{{ $post->content }}</p>
           <p class="text-xs text-gray-500">By {{ $post->user->name ?? 'Unknown' }}</p>
+          @if($post->image)
+                <img src="{{ asset('storage/' . $post->image) }}" 
+                     alt="{{ $post->title }}" 
+                     class="w-full h-48 object-cover rounded-md">
+          @endif
 
         </div>
 
@@ -56,9 +61,9 @@
               
                </form>
           @else
-            <a href="/posts/{{ $post->id }}"
+            <a href="{{ route('posts.show', $post->id) }}"
               class="rounded-lg bg-indigo-50 px-3 py-1.5 font-medium text-indigo-600 transition-colors duration-150 hover:bg-indigo-100">View</a>
-            <a href="/posts/{{ $post->id }}/edit"
+            <a href="{{ route('posts.edit', $post->id) }}"
               class="rounded-lg bg-amber-50 px-3 py-1.5 font-medium text-amber-600 transition-colors duration-150 hover:bg-amber-100">Edit</a>
 
             <form action="{{ route('posts.destroy', $post->id) }}" method="POST" class="inline">
@@ -85,3 +90,5 @@
   @foreach($errors as $err)
     <p class="text-sm text-red-500">{{ $err }}</p>
   @endforeach
+
+</x-layout>

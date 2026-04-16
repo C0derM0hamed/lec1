@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-
+use App\Models\Post;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -23,7 +23,8 @@ class StorePostRequest extends FormRequest
      */
     public function rules(): array
     {
-        $postId = $this->route('id');
+        $postRouteParam = $this->route('post');
+        $postId = $postRouteParam instanceof Post ? $postRouteParam->id : $postRouteParam;
 
         return [
             'title' => [
@@ -32,6 +33,8 @@ class StorePostRequest extends FormRequest
                 Rule::unique('posts', 'title')->ignore($postId),
             ],
             'content' => ['required','min:10'],
+            'user_id' => ['required', 'exists:users,id'],
+            'image' => ['nullable','image','max:2048', 'mimes:jpeg,png,jpg,gif,svg'],
         ];
     }
 
@@ -41,6 +44,9 @@ class StorePostRequest extends FormRequest
             'title.unique' => 'The title must be unique.',
             'title.min' => 'The title must be at least 3 characters.',
             'content.required' => 'The content field is required.',
+            'image.image' => 'The image must be a valid image file.',
+            'image.max' => 'The image must not exceed 2MB.',
+            'image.mimes' => 'The image must be a file of type: jpeg, png, jpg, gif, svg.',
         ];
     }
 }

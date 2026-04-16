@@ -1,6 +1,7 @@
-<script src="https://cdn.tailwindcss.com"></script>
+<x-layout>
 
-<form action="/posts" class="mx-auto max-w-lg space-y-6 rounded-2xl border border-gray-100 bg-white p-8 shadow-lg shadow-gray-100 mt-16 sm:mt-24" method="POST">
+
+<form action="{{ route('posts.store') }}" class="mx-auto mt-6 max-w-lg space-y-6 rounded-2xl border border-gray-100 bg-white p-8 shadow-lg shadow-gray-100 sm:mt-8" method="POST" enctype="multipart/form-data">
   @csrf
   <div>
     <label class="mb-1.5 block text-sm font-semibold text-gray-800" for="title">Title</label>
@@ -17,6 +18,20 @@
       <option  value="{{ $user->id }}">{{ $user->name }}</option>
     @endforeach
   </select>
+  <div>
+        <label class="block text-sm font-medium text-gray-700"> image</label>
+        <input type="file" name="image" accept="image/*" 
+               class="mt-1 block w-full text-sm text-gray-500
+                      file:mr-4 file:py-2 file:px-4
+                      file:rounded-full file:border-0
+                      file:text-sm file:font-semibold
+                      file:bg-indigo-50 file:text-indigo-700
+                      hover:file:bg-indigo-100">
+        
+        @error('image')
+            <span class="text-red-500 text-xs mt-1">{{ $message }}</span>
+        @enderror
+    </div>
 
   <button type="submit" class="block w-full rounded-xl bg-indigo-600 px-6 py-3.5 text-sm font-semibold text-white shadow-md shadow-indigo-200 transition-all duration-200 hover:bg-indigo-700 hover:shadow-lg hover:shadow-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
     Create Post
@@ -33,3 +48,4 @@
   @foreach($errors as $err)
     <p class="text-sm text-red-500">{{ $err }}</p>
   @endforeach
+</x-layout>
