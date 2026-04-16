@@ -23,18 +23,16 @@ class StorePostRequest extends FormRequest
      */
     public function rules(): array
     {
-        $postRouteParam = $this->route('post');
-        $postId = $postRouteParam instanceof Post ? $postRouteParam->id : $postRouteParam;
-
         return [
             'title' => [
                 'required',
+                'string',
                 'min:3',
-                Rule::unique('posts', 'title')->ignore($postId),
+                'max:255',
+                Rule::unique('posts', 'title'),
             ],
-            'content' => ['required','min:10'],
-            'user_id' => ['required', 'exists:users,id'],
-            'image' => ['nullable','image','max:2048', 'mimes:jpeg,png,jpg,gif,svg'],
+            'content' => ['required', 'string', 'min:10'],
+            'image' => ['nullable', 'image', 'max:2048', 'mimes:jpeg,png,jpg,gif,svg'],
         ];
     }
 

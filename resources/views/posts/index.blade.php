@@ -29,6 +29,8 @@
               class="transition-colors duration-150 hover:text-indigo-600 hover:underline decoration-indigo-300 underline-offset-2">{{ $post->title }}</a>
           </h2>
 
+          <p class="mt-1 text-xs font-semibold text-indigo-600">Slug: {{ $post->slug }}</p>
+
           <p class="mt-2 text-sm leading-relaxed text-gray-500">{{ $post->content }}</p>
           <p class="text-xs text-gray-500">By {{ $post->user->name ?? 'Unknown' }}</p>
           @if($post->image)
@@ -47,7 +49,9 @@
               <button type="submit"
                 class="rounded-lg bg-emerald-50 px-3 py-1.5 font-medium text-emerald-600 transition-colors duration-150 hover:bg-emerald-100">
                 Restore
-              </button>
+                /**
+     * Return the sluggable configuration array for this model.
+     */</button>
               </form>
 
               <form action="{{ route('posts.forceDelete', $post->id) }}" method="POST" class="inline">
